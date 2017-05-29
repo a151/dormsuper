@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="struts2" extends="json-default">
+		
+		<action name="userAdd" class="userAddAction">
+			<result type="json"/>
+		</action>
+		<action name="userSelect" class="userSelectAction">
+			<result type="json"/>
+		</action>
+		<action name="userEdit" class="userEditAction">
+			<result type="json"/>
+		</action>
+		<action name="userDelete" class="userDeleteAction">
+			<result type="json"/>
+		</action>
+		
+		 <action name="cookBookDelete" class="cookBookDeleteAction">
+            <result type="json"/>
+        </action>
+		
+		<action name="intetrationSelect" class="intetrationSelectAction">
+			<result type="json"/>
+		</action>
+		
+		<action name="login" class="loginAction">
+			<result type="json"/>
+		</action>
+		
+		<action name="goodsSelect" method="execute" class="goodsSelectAction">
+            <result type="json"/>
+        </action>
+        
+        <action name="goodsDelete" class="goodsDeleteAction">
+            <result type="json"/>
+        </action>
+        
+        <action name="goodsSetRecomend" class="goodsSetRecomendAction">
+            <result type="json"/>
+        </action>
+		
+		<action name="goodsSelectById" class="goodsSelectByIdAction">
+            <result type="json"/>
+        </action>
+        
+        <action name="goodsSelectByCategory" class="goodsSelectByCategoryAction">
+            <result type="json"/>
+        </action>
+        
+        
+        
+        
+        <action name="areaSelect" class="areaSelectAction">
+            <result type="json"/>
+        </action>
+        
+        <action name="areaAdd" class="areaAddAction">
+            <result type="json"/>
+        </action>
+        
+        <action name="areaDelete" class="areaDeleteAction">
+            <result type="json"/>
+        </action>
+        
+        <action name="indentSelect" class="indentSelectAction">
+            <result type="json"/>
+        </action>
+        
+        <action name="indentEdit" class="indentEditAction">
+            <result type="json"/>
+        </action>
+        
+        <action name="indentDelete" class="indentDeleteAction">
+            <result type="json"/>
+        </action>
+        
+        <action name="orderAdd" class="orderAddAction">
+            <result type="json"/>
+        </action>
+        
+        <action name="receiveaddrAdd" class="receiveaddrAddAction">
+            <result type="json"/>
+        </action>
+        
+        <action name="receiveaddrSelect" class="receiveaddrSelectAction">
+            <result type="json"/>
+        </action>
+        
+        <action name="receiveaddrDel" class="receiveaddrDelAction">
+            <result type="json"/>
+        </action>
+        
+        <action name="receiveaddrSetDefault2" class="receiveaddrSetDefault2Action">
+            <result type="json"/>
+        </action>
+        
+        <action name="receiveaddrEdit" class="receiveaddrEditAction">
+            <result type="json"/>
+        </action>
+        
+        <action name="cookBookSelect" class="cookBookSelectAction">
+            <result type="json"/>
+        </action>
+        
+        <action name="cookBookAddMateriel" class="cookBookAddMaterielAction">
+            <result type="json"/>
+        </action>
+        
+        <action name="cookBookSelectById" class="cookBookSelectByIdAction">
+            <result type="json"/>
+        </action>
+        
+        
+       
+        
+	</package>
+	
+	<package name="file" extends="struts-default">
+        <action name="goodsAdd" method="execute" class="goodsAddAction">
+            <result name="success">/goods/success.jsp</result>
+            <result name="fail">/goods/fail.html</result>
+        </action>
+        
+        <action name="goodsEdit" method="execute" class="goodsEditAction">
+            <result name="success">/goods/success.jsp</result>
+            <result name="fail">/goods/fail.html</result>
+        </action>
+        
+        <action name="goodsIntegrationEdit" method="execute" class="goodsIntegrationEditAction">
+            <result name="success">/integration/success.jsp</result>
+            <result name="fail">/integration/fail.html</result>
+        </action>
+        
+        <action name="deductionEdit" method="execute" class="deductionEditAction">
+            <result name="success">/integration/success.jsp</result>
+            <result name="fail">/integration/fail.html</result>
+        </action>
+        
+        <action name="cookBookAdd" method="execute" class="cookBookAddAction">
+            <result name="success">/goods/success.jsp</result>
+            <result name="fail">/goods/fail.html</result>
+        </action>
+        
+        <action name="cookBookEdit" method="execute" class="cookBookEditAction">
+            <result name="success">/goods/success.jsp</result>
+            <result name="fail">/goods/fail.html</result>
+        </action>
+        
+    </package>
+</struts>

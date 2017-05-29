@@ -1,0 +1,433 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+	
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName">
+			<value>com.mysql.jdbc.Driver</value>
+		</property>
+		<property name="url">
+			<!-- 连接url -->
+			<value>jdbc:mysql://localhost:3306/dormsuper?useUnicode=true&amp;characterEncoding=UTF-8</value>
+		</property>
+		<property name="username">
+			<value>root</value>
+		</property>
+		<property name="password">
+			<value></value>
+		</property>
+	</bean>
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.MySQLDialect
+				</prop>
+			</props>
+		</property>
+		<property name="mappingResources">
+			<list>
+				<value>cn/edu/bgu/dormsuper/po/User.hbm.xml</value>
+				<value>cn/edu/bgu/dormsuper/po/Goods.hbm.xml</value>
+				<value>cn/edu/bgu/dormsuper/po/Area.hbm.xml</value>
+				<value>cn/edu/bgu/dormsuper/po/Indent.hbm.xml</value>
+				<value>cn/edu/bgu/dormsuper/po/Deduction.hbm.xml</value>
+				<value>cn/edu/bgu/dormsuper/po/Receiveaddr.hbm.xml</value>
+				<value>cn/edu/bgu/dormsuper/po/CookBook.hbm.xml</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>
+	
+	<!-- 声明一个 Hibernate 3 的事务管理器供代理类自动管理事务用 -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	
+	<bean id="receiveaddrDAO" class="cn.edu.bgu.dormsuper.dao.ReceiveaddrDAOImpl">
+		<property name="hibernateTemplate">
+			<ref bean="hibernateTemplate"/>
+		</property>
+	</bean>
+	
+	<bean id="receiveaddrDAOProxy"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="target">
+			<ref bean="receiveaddrDAO" />
+		</property>
+
+		<property name="transactionAttributes">
+			<props>
+				<!-- 这里的方法签名可以精确到方法全配置上 -->
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="cookBookDAO" class="cn.edu.bgu.dormsuper.dao.CookBookDAOImpl">
+		<property name="hibernateTemplate">
+			<ref bean="hibernateTemplate"/>
+		</property>
+	</bean>
+	
+	<bean id="cookBookDAOProxy"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="target">
+			<ref bean="cookBookDAO" />
+		</property>
+
+		<property name="transactionAttributes">
+			<props>
+				<!-- 这里的方法签名可以精确到方法全配置上 -->
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="userDAO" class="cn.edu.bgu.dormsuper.dao.UserDAOImpl">
+		<property name="hibernateTemplate">
+			<ref bean="hibernateTemplate"/>
+		</property>
+	</bean>
+	
+	<bean id="userDAOProxy"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="target">
+			<ref bean="userDAO" />
+		</property>
+
+		<property name="transactionAttributes">
+			<props>
+				<!-- 这里的方法签名可以精确到方法全配置上 -->
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="deductionDAO" class="cn.edu.bgu.dormsuper.dao.DeductionDAOImpl">
+		<property name="hibernateTemplate">
+			<ref bean="hibernateTemplate"/>
+		</property>
+	</bean>
+	
+	<bean id="deductionDAOProxy"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="target">
+			<ref bean="deductionDAO" />
+		</property>
+
+		<property name="transactionAttributes">
+			<props>
+				<!-- 这里的方法签名可以精确到方法全配置上 -->
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="indentDAO" class="cn.edu.bgu.dormsuper.dao.IndentDAOImpl">
+		<property name="hibernateTemplate">
+			<ref bean="hibernateTemplate"/>
+		</property>
+	</bean>
+	
+	<bean id="indentDAOProxy"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="target">
+			<ref bean="indentDAO" />
+		</property>
+
+		<property name="transactionAttributes">
+			<props>
+				<!-- 这里的方法签名可以精确到方法全配置上 -->
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="areaDAO" class="cn.edu.bgu.dormsuper.dao.AreaDAOImpl">
+		<property name="hibernateTemplate">
+			<ref bean="hibernateTemplate"/>
+		</property>
+	</bean>
+	
+	<bean id="areaDAOProxy"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="target">
+			<ref bean="areaDAO" />
+		</property>
+
+		<property name="transactionAttributes">
+			<props>
+				<!-- 这里的方法签名可以精确到方法全配置上 -->
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="goodsDAO" class="cn.edu.bgu.dormsuper.dao.GoodsDAOImpl">
+		<property name="hibernateTemplate">
+			<ref bean="hibernateTemplate"/>
+		</property>
+	</bean>
+	
+	<bean id="goodsDAOProxy"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="target">
+			<ref bean="goodsDAO" />
+		</property>
+
+		<property name="transactionAttributes">
+			<props>
+				<!-- 这里的方法签名可以精确到方法全配置上 -->
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	
+	
+	<bean id="userPasswordEditAction" class="cn.edu.bgu.dormsuper.action.UserPasswordEditAction">
+		<property name="userDAO">
+			<ref bean="userDAOProxy"/>
+		</property>
+	</bean>
+	
+	<bean id="userAddAction" class="cn.edu.bgu.dormsuper.action.UserAddAction">
+		<property name="userDAO">
+			<ref bean="userDAOProxy"/>
+		</property>
+	</bean>
+	<bean id="userDeleteAction" class="cn.edu.bgu.dormsuper.action.UserDeleteAction">
+		<property name="userDAO">
+			<ref bean="userDAOProxy"/>
+		</property>
+	</bean>
+	
+	<bean id="userSelectAction" class="cn.edu.bgu.dormsuper.action.UserSelectAction">
+		<property name="userDAO">
+			<ref bean="userDAOProxy"/>
+		</property>
+	</bean>
+	
+	<bean id="intetrationSelectAction" class="cn.edu.bgu.dormsuper.action.IntetrationSelectAction">
+		<property name="userDAO">
+			<ref bean="userDAOProxy"/>
+		</property>
+	</bean>
+	
+	<bean id="receiveaddrSetDefault2Action" class="cn.edu.bgu.dormsuper.action.ReceiveaddrSetDefault2Action">
+		<property name="userDAO">
+			<ref bean="userDAOProxy"/>
+		</property>
+	</bean>
+	
+	<bean id="loginAction" class="cn.edu.bgu.dormsuper.action.LoginAction">
+		<property name="userDAO">
+			<ref bean="userDAOProxy"/>
+		</property>
+	</bean>
+	
+	<bean id="userEditAction" class="cn.edu.bgu.dormsuper.action.UserEditAction">
+		<property name="userDAO">
+			<ref bean="userDAOProxy"/>
+		</property>
+	</bean>
+	
+	<bean id="goodsSelectAction" class="cn.edu.bgu.dormsuper.action.GoodsSelectAction">
+		<property name="goodsDAO">
+			<ref bean="goodsDAOProxy"/>
+		</property>
+	</bean>
+	
+	<bean id="goodsAddAction" class="cn.edu.bgu.dormsuper.action.GoodsAddAction">
+		<property name="goodsDAO">
+			<ref bean="goodsDAOProxy"/>
+		</property>
+	</bean>
+	
+	<bean id="goodsDeleteAction" class="cn.edu.bgu.dormsuper.action.GoodsDeleteAction">
+		<property name="goodsDAO">
+			<ref bean="goodsDAOProxy"/>
+		</property>
+	</bean>
+	
+	<bean id="goodsSetRecomendAction" class="cn.edu.bgu.dormsuper.action.GoodsSetRecomendAction">
+		<property name="goodsDAO">
+			<ref bean="goodsDAOProxy"/>
+		</property>
+	</bean>
+	
+	<bean id="goodsSelectByIdAction" class="cn.edu.bgu.dormsuper.action.GoodsSelectByIdAction">
+		<property name="goodsDAO">
+			<ref bean="goodsDAOProxy"/>
+		</property>
+	</bean>
+	
+	<bean id="goodsSelectByCategoryAction" class="cn.edu.bgu.dormsuper.action.GoodsSelectByCategoryAction">
+		<property name="goodsDAO">
+			<ref bean="goodsDAOProxy"/>
+		</property>
+	</bean>
+	
+	<bean id="goodsEditAction" class="cn.edu.bgu.dormsuper.action.GoodsEditAction">
+		<property name="goodsDAO">
+			<ref bean="goodsDAOProxy"/>
+		</property>
+	</bean>
+	
+	<bean id="areaSelectAction" class="cn.edu.bgu.dormsuper.action.AreaSelectAction">
+		<property name="areaDAO">
+			<ref bean="areaDAOProxy"/>
+		</property>
+	</bean>
+	
+	<bean id="areaAddAction" class="cn.edu.bgu.dormsuper.action.AreaAddAction">
+		<property name="areaDAO">
+			<ref bean="areaDAOProxy"/>
+		</property>
+	</bean>
+	
+	<bean id="areaDeleteAction" class="cn.edu.bgu.dormsuper.action.AreaDeleteAction">
+		<property name="areaDAO">
+			<ref bean="areaDAOProxy"/>
+		</property>
+	</bean>
+	
+	<bean id="indentSelectAction" class="cn.edu.bgu.dormsuper.action.IndentSelectAction">
+		<property name="indentDAO">
+			<ref bean="indentDAOProxy"/>
+		</property>
+	</bean>
+	
+	<bean id="indentEditAction" class="cn.edu.bgu.dormsuper.action.IndentEditAction">
+		<property name="indentDAO">
+			<ref bean="indentDAOProxy"/>
+		</property>
+	</bean>
+	
+	<bean id="indentDeleteAction" class="cn.edu.bgu.dormsuper.action.IndentDeleteAction">
+		<property name="indentDAO">
+			<ref bean="indentDAOProxy"/>
+		</property>
+	</bean>
+	
+	
+	
+	<bean id="orderAddAction" class="cn.edu.bgu.dormsuper.action.OrderAddAction">
+		<property name="indentDAO">
+			<ref bean="indentDAOProxy"/>
+		</property>
+	</bean>
+	
+	<bean id="goodsIntegrationEditAction" class="cn.edu.bgu.dormsuper.action.GoodsIntegrationEditAction">
+		<property name="goodsDAO">
+			<ref bean="goodsDAOProxy"/>
+		</property>
+	</bean>
+	
+	<bean id="deductionEditAction" class="cn.edu.bgu.dormsuper.action.DeductionEditAction">
+		<property name="deductionDAO">
+			<ref bean="deductionDAOProxy"/>
+		</property>
+	</bean>
+	
+	<bean id="receiveaddrAddAction" class="cn.edu.bgu.dormsuper.action.ReceiveaddrAddAction">
+		<property name="receiveaddrDAO">
+			<ref bean="receiveaddrDAOProxy"/>
+		</property>
+	</bean>
+	
+	<bean id="receiveaddrSelectAction" class="cn.edu.bgu.dormsuper.action.ReceiveaddrSelectAction">
+		<property name="receiveaddrDAO">
+			<ref bean="receiveaddrDAOProxy"/>
+		</property>
+	</bean>
+	
+	<bean id="receiveaddrDelAction" class="cn.edu.bgu.dormsuper.action.ReceiveaddrDelAction">
+		<property name="receiveaddrDAO">
+			<ref bean="receiveaddrDAOProxy"/>
+		</property>
+	</bean>
+	
+	<bean id="receiveaddrEditAction" class="cn.edu.bgu.dormsuper.action.ReceiveaddrEditAction">
+		<property name="receiveaddrDAO">
+			<ref bean="receiveaddrDAOProxy"/>
+		</property>
+	</bean>
+	
+	<bean id="cookBookSelectAction" class="cn.edu.bgu.dormsuper.action.CookBookSelectAction">
+		<property name="cookBookDAO">
+			<ref bean="cookBookDAOProxy"/>
+		</property>
+	</bean>
+	
+	<bean id="cookBookAddMaterielAction" class="cn.edu.bgu.dormsuper.action.CookBookAddMaterielAction">
+		<property name="goodsDAO">
+			<ref bean="goodsDAOProxy"/>
+		</property>
+	</bean>
+	
+	<bean id="cookBookAddAction" class="cn.edu.bgu.dormsuper.action.CookBookAddAction">
+		<property name="cookBookDAO">
+			<ref bean="cookBookDAOProxy"/>
+		</property>
+	</bean>
+	
+	<bean id="cookBookDeleteAction" class="cn.edu.bgu.dormsuper.action.CookBookDeleteAction">
+		<property name="cookBookDAO">
+			<ref bean="cookBookDAOProxy"/>
+		</property>
+	</bean>
+	
+	<bean id="cookBookSelectByIdAction" class="cn.edu.bgu.dormsuper.action.CookBookSelectByIdAction">
+		<property name="cookBookDAO">
+			<ref bean="cookBookDAOProxy"/>
+		</property>
+	</bean>
+	
+	
+	<bean id="cookBookEditAction" class="cn.edu.bgu.dormsuper.action.CookBookEditAction">
+		<property name="cookBookDAO">
+			<ref bean="cookBookDAOProxy"/>
+		</property>
+	</bean>
+	
+	
+	
+	
+</beans>
